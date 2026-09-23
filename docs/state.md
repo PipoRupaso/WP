@@ -86,3 +86,19 @@ _Terse ordered log of executed actions._
 - Sim #7 had no nights bug (update_daytime missing in sim loop — added). Sim #8 (with nights + pre-sleep-fix): lvl1 5/6, мёртвых 1 — sleep 300 s covered both nights (too long) → fixed.
 - Sim #9 (PID 3987): final, all fixes. Check /tmp/sim_final9.log.
 - Night in sim: DAYT advances (update_daytime in 2x loop); night1 t=84-173, night2 t=324-413; scene dark, light only campfire (verified sim_night_130s).
+
+## Этап 10 (2026-09-23): слои, звери, непрерывная земля
+
+- Иерархия слоёв: единая глубинная сортировка (`game/render/depth.py`),
+  ключ — центр основания объекта / ноги фигуры; поселение больше не
+  рисуется отдель проходом поверх мира (люди за домами и ёлками скрыты).
+- Звери: спрайтовые модели вместо коробок (`game/village/animals.py`):
+  олень 30x24 с рогами и аллюром на 4 фазы (каждая нога отдельно),
+  заяц 16x10 с циклом прыжка; позы еды/тревоги/трупа.
+- Люди: мастер 20x32 (вчетверо больше пикселей при том же пикселе арта),
+  оружие в руках: копьё, дубинка, камень, факел, жердь; позы aim/attack.
+- Земля: тропинки шириной со ступню (сетка износа 6 узлов/клетка) и гарь
+  от взрывов — непрерывное поле с размывом (`draw_wear_layer`); кратеры —
+  непрерывный тон (`_draw_crater_field`), плитки-швы устранены.
+- Проверено: --test (objects=1884 dented=17), vtest 13/13, vtest2 OK,
+  --sim 720s (уровень 2, 8/11 построек), --bench, --closeup, showcase.
