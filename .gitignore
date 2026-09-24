@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# PyInstaller (создаются build_exe.bat заново при каждой сборке)
+build/
+dist/
+*.spec
+*.toc
+
+# Скриншоты, которые генерируют main.py --test / --sim / --closeup / --bench
+/*.png
+/screenshots/showcase/
